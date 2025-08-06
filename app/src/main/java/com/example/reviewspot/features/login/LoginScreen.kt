@@ -65,7 +65,7 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                                 Toast.LENGTH_LONG
                             ).show()
 
-                            nav.navigate("Navigation")
+                            nav.navigate(AuthScreens.Navigation.name)
                         }
                     }
                     else{

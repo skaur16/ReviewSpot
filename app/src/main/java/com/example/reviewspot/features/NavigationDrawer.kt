@@ -29,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reviewspot.AppNavHost
+import com.example.reviewspot.AuthScreens
 import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
@@ -38,7 +40,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawer( viewModel: ReviewViewModel) {
+fun NavigationDrawer( viewModel: ReviewViewModel, mainNavController : NavController) {
 
     //creating a layout to take over every screen
 
@@ -46,7 +48,7 @@ fun NavigationDrawer( viewModel: ReviewViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name)
+    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name, AuthScreens.Logout.name)
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -75,6 +77,9 @@ fun NavigationDrawer( viewModel: ReviewViewModel) {
                         selected = false,
                         onClick = {
                             scope.launch { drawerState.close() }
+                            if(item == AuthScreens.Logout.name){
+                                mainNavController.navigate(AuthScreens.Logout.name)
+                            }
                             navController.navigate(item)
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)

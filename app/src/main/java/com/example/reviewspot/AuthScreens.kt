@@ -2,5 +2,8 @@ package com.example.reviewspot
 
 enum class AuthScreens {
     Login,
-    Register
+    Register,
+    Navigation,
+    Loading,
+    Logout
 }

@@ -49,6 +49,10 @@ interface ReviewDao {
     @Query("SELECT * from Item where itemType = :itemType and itemName = :itemName")
     suspend fun getItemByTypeAndName(itemType : String, itemName : String) : Item
 
+    @Query("DELETE FROM LoggedInUser")
+    suspend fun deleteLoggedInUser()
+
+
 
 
 }

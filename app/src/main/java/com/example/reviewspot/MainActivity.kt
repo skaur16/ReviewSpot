@@ -22,6 +22,7 @@ import com.example.reviewspot.features.LoadingScreen
 import com.example.reviewspot.features.NavigationDrawer
 import com.example.reviewspot.features.login.LoginScreen
 import com.example.reviewspot.features.login.RegisterScreen
+import com.example.reviewspot.features.logout.LogOutScreen
 import com.example.reviewspot.ui.theme.ReviewSpotTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,13 +35,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             ReviewSpotTheme {
                 val mainNavController = rememberNavController()
-                var startDestination = remember { mutableStateOf("Loading") }
+                var startDestination = remember { mutableStateOf(AuthScreens.Loading.name) }
 
                 LaunchedEffect(key1 = viewModel.loggedInUserFound.value) {
                     viewModel.getLoggedInUser()
 
                     if(viewModel.loggedInUserFound.value){
-                        startDestination.value = "Navigation"
+                        startDestination.value = AuthScreens.Navigation.name
                     }
                     else{
                         startDestination.value = AuthScreens.Login.name
@@ -59,11 +60,14 @@ class MainActivity : ComponentActivity() {
                     composable(AuthScreens.Register.name){
                         RegisterScreen(viewModel, mainNavController)
                     }
-                    composable("Navigation"){
-                        NavigationDrawer(viewModel)
+                    composable(AuthScreens.Navigation.name){
+                        NavigationDrawer(viewModel, mainNavController)
                     }
-                    composable("Loading"){
+                    composable(AuthScreens.Loading.name){
                         LoadingScreen()
+                    }
+                    composable(AuthScreens.Logout.name){
+                        LogOutScreen(mainNavController, viewModel)
                     }
                 }
 

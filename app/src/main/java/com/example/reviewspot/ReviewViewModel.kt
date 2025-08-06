@@ -236,4 +236,15 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
     suspend fun getUserById(id : Int) : User {
         return db.getUserByID(id)
     }
+
+    //feature : LogOut
+    var logOutAlertOpen = mutableStateOf(false)
+
+    fun deleteLoggedInUser(onSucces : () -> Unit){
+        viewModelScope.launch {
+            db.deleteLoggedInUser()
+        }.invokeOnCompletion {
+            onSucces()
+        }
+    }
 }

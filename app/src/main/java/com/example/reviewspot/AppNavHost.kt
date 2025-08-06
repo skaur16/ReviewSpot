@@ -9,6 +9,7 @@ import com.example.reviewspot.features.AddReview.AddReviewScreen
 import com.example.reviewspot.features.addItem.AddItemScreen
 import com.example.reviewspot.features.home.HomeScreen
 import com.example.reviewspot.features.itemInfo.ItemInfoScreen
+import com.example.reviewspot.features.logout.LogOutScreen
 import com.example.reviewspot.features.myReviews.MyReviewScreen
 
 
@@ -39,6 +40,11 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
 
         composable("ItemInfo"){
             viewModel.itemInfo.value?.let { it1 -> ItemInfoScreen(viewModel, it1, nav) }
+        }
+
+        composable(AuthScreens.Logout.name){
+            LogOutScreen(nav, viewModel)
+
         }
 
 

@@ -66,13 +66,30 @@ fun AddReviewScreen(navController: NavController, viewModel: ReviewViewModel) {
             Button(
                 onClick = {
                     //add review to database
-                    viewModel.addReview() {
+                    if(viewModel.itemNameSelected.value.isEmpty() || viewModel.itemNameSelected.value.isBlank()){
+                    Toast.makeText(
+                        context,
+                        "Please select an item!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    }
+                    else if(viewModel.reviewText.value.isEmpty() || viewModel.reviewText.value.isBlank()){
                         Toast.makeText(
                             context,
-                            "Review Added!",
+                            "Review Text cannot be empty!",
                             Toast.LENGTH_LONG
                         ).show()
+                    }
 
+                    else{
+                        viewModel.addReview() {
+                            Toast.makeText(
+                                context,
+                                "Review Added!",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
                     }
                 }
             ) {

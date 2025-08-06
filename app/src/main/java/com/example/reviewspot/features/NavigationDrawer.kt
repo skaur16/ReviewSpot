@@ -46,7 +46,7 @@ fun NavigationDrawer( viewModel: ReviewViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name, Screens.ItemInfo.name)
+    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name)
 
     ModalNavigationDrawer(
         drawerState = drawerState,

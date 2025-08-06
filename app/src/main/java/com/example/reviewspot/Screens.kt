@@ -4,6 +4,5 @@ enum class Screens {
     Home,
     AddItems,
     AddReview,
-    MyReviews,
-    ItemInfo
+    MyReviews
 }

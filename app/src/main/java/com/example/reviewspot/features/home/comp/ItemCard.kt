@@ -19,17 +19,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.reviewspot.ReviewViewModel
+import com.example.reviewspot.features.itemInfo.ItemInfoScreen
 import com.example.reviewspot.features.room.Item
 
 @Composable
-fun ItemCard(item: Item, nav: NavController) {
+fun ItemCard(item: Item, nav: NavController, viewModel: ReviewViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable {
-
+                viewModel.itemInfo.value = item
+                nav.navigate("itemInfo")
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp)

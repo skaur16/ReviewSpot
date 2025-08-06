@@ -216,10 +216,20 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
 
     }
 
-    var itemByID = mutableStateOf<Item?>(null)
+
 
     suspend fun getItemByID(id : Int) : Item? {
         return db.getItemByID(id)
 
     }
+
+    var itemReviews = mutableStateOf<List<Review>>(listOf())
+    fun getReviewsByItemId(itemId : Int) {
+        viewModelScope.launch{
+            itemReviews.value = db.getReviewsForItem(itemId)
+        }
+    }
+
+    //feature : ItemInfo
+    var itemInfo = mutableStateOf<Item?>(null)
 }

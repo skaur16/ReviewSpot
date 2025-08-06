@@ -46,7 +46,7 @@ fun HomeScreen(viewModel: ReviewViewModel, nav : NavController) {
     {
        LazyColumn(modifier = Modifier.padding(it)){
            items(viewModel.allItems.value){item->
-               ItemCard(item, nav)
+               ItemCard(item, nav, viewModel)
            }
        }
     }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.reviewspot.features.AddReview.AddReviewScreen
 import com.example.reviewspot.features.addItem.AddItemScreen
 import com.example.reviewspot.features.home.HomeScreen
+import com.example.reviewspot.features.myReviews.MyReviewScreen
 
 
 @Composable
@@ -30,6 +31,10 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
             AddReviewScreen(nav,viewModel)
         }
 
+        composable(Screens.MyReviews.name) {
+            //my reviews screen
+            MyReviewScreen(viewModel)
+        }
 
 
 

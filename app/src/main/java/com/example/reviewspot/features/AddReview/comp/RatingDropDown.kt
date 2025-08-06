@@ -1,4 +1,4 @@
-package com.example.reviewspot.features.addItem.comp
+package com.example.reviewspot.features.AddReview.comp
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.DropdownMenuItem
@@ -10,49 +10,47 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.example.reviewspot.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemType(
-    viewModel: ReviewViewModel,
-    options: List<ItemTypeList>
-) {
-    //Dropdown to display item types
+fun RatingDropDown(viewModel: ReviewViewModel) {
+
+    val options = listOf(0,1,2,3,4,5)
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         ExposedDropdownMenuBox(
-            expanded = viewModel.itemTypeListExpanded.value,
+            expanded = viewModel.ratingExpanded.value,
             onExpandedChange = {
-                viewModel.itemTypeListExpanded.value = !viewModel.itemTypeListExpanded.value
+                viewModel.ratingExpanded.value = !viewModel.ratingExpanded.value
             }
         ) {
             TextField(
-                value = viewModel.itemTypeSelected.value.name,
+                value = viewModel.ratingSelected.value.toString(),
                 onValueChange = {},
-                label = { Text(text = "Item Type") },
+                label = { Text(text = "Rating") },
                 readOnly = true,
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded = viewModel.itemTypeListExpanded.value
+                        expanded = viewModel.ratingExpanded.value
                     )
                 },
                 modifier = Modifier.menuAnchor()
             )
 
             ExposedDropdownMenu(
-                expanded = viewModel.itemTypeListExpanded.value,
-                onDismissRequest = { viewModel.itemTypeListExpanded.value = false }
+                expanded = viewModel.ratingExpanded.value,
+                onDismissRequest = { viewModel.ratingExpanded.value = false }
             ) {
-                options.forEach { itemType ->
+                options.forEach { option ->
                     DropdownMenuItem(
-                        text = { Text(text = itemType.name) },
+                        text = { Text(text = option.toString()) },
                         onClick = {
-                            viewModel.itemTypeListExpanded.value = false
-                            viewModel.itemTypeSelected.value = itemType
+                            viewModel.ratingExpanded.value = false
+                            viewModel.ratingSelected.value = option
                         }
                     )
 
@@ -60,6 +58,4 @@ fun ItemType(
             }
         }
     }
-
-
 }

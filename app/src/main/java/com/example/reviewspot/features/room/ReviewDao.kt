@@ -40,4 +40,11 @@ interface ReviewDao {
     @Query("SELECT * FROM LoggedInUser")
     suspend fun getLoggedInUser() : LoggedInUser?
 
+    @Query("SELECT * FROM Item where itemType = :itemType")
+    suspend fun getItemsByType(itemType : String) : List<Item>
+
+    @Query("SELECT * from Item where itemType = :itemType and itemName = :itemName")
+    suspend fun getItemByTypeAndName(itemType : String, itemName : String) : Item
+
+
 }

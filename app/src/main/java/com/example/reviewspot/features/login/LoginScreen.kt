@@ -65,6 +65,7 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                                 Toast.LENGTH_LONG
                             ).show()
 
+                            nav.navigate("Navigation")
                         }
                     }
                     else{
@@ -75,7 +76,6 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                             Toast.LENGTH_LONG
                         ).show()
 
-                        nav.navigate("Navigation")
                         //reset fields
                         viewModel.userEmail.value = ""
                         viewModel.userPassword.value = ""

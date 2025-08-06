@@ -9,6 +9,7 @@ import androidx.room.Room
 import com.example.reviewspot.features.addItem.comp.ItemTypeList
 import com.example.reviewspot.features.room.Item
 import com.example.reviewspot.features.room.LoggedInUser
+import com.example.reviewspot.features.room.Review
 import com.example.reviewspot.features.room.ReviewDatabase
 import com.example.reviewspot.features.room.User
 import kotlinx.coroutines.launch
@@ -160,6 +161,48 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
             loggedInUser.value = db.getLoggedInUser()
         }.invokeOnCompletion {
             loggedInUserFound.value = loggedInUser.value != null
+        }
+    }
+
+    //feature : Add Review
+
+    var itemsListByType = mutableStateOf<List<Item>>(listOf())
+    var itemsNameListExpanded = mutableStateOf(false)
+    var itemNameSelected = mutableStateOf("")
+    var ratingExpanded = mutableStateOf(false)
+    var ratingSelected = mutableStateOf(0)
+    var reviewText = mutableStateOf("")
+    var itemFoundByNameAndType = mutableStateOf<Item?>(null)
+
+    fun getItemsByType(){
+        viewModelScope.launch {
+            itemsListByType.value = db.getItemsByType(itemTypeSelected.value.name)
+        }
+
+    }
+
+    fun findItemByTypeAndName() {
+        viewModelScope.launch{
+            itemFoundByNameAndType.value = db.getItemByTypeAndName(itemTypeSelected.value.name, itemNameSelected.value)
+        }
+
+    }
+
+    fun addReview(onSuccess : () -> Unit){
+        viewModelScope.launch{
+            val itemId = itemFoundByNameAndType.value!!.itemID
+
+            val review = Review(
+                    reviewID = 0,
+                    reviewText = reviewText.value,
+                    rating = ratingSelected.value,
+                    itemID = itemId,
+                    userID = loggedInUser.value!!.userID
+            )
+            db.insertReview(review)
+
+        }.invokeOnCompletion {
+            onSuccess()
         }
     }
 }

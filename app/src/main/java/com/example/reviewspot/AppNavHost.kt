@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.reviewspot.features.AddReview.AddReviewScreen
 import com.example.reviewspot.features.addItem.AddItemScreen
 import com.example.reviewspot.features.home.HomeScreen
 
@@ -23,6 +24,12 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
             //add items screen
             AddItemScreen(viewModel)
         }
+
+        composable(Screens.AddReview.name) {
+            //add review screen
+            AddReviewScreen(nav,viewModel)
+        }
+
 
 
 

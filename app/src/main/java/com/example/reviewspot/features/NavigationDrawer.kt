@@ -48,7 +48,7 @@ fun NavigationDrawer( viewModel: ReviewViewModel, mainNavController : NavControl
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name, AuthScreens.Logout.name)
+    val menuItems = listOf(Screens.Home.name, Screens.AddItems.name, Screens.MyReviews.name, Screens.AddReview.name)
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -77,14 +77,35 @@ fun NavigationDrawer( viewModel: ReviewViewModel, mainNavController : NavControl
                         selected = false,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            if(item == AuthScreens.Logout.name){
-                                mainNavController.navigate(AuthScreens.Logout.name)
-                            }
                             navController.navigate(item)
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
                 }
+
+                //Logout Button
+                Spacer(modifier = Modifier.weight(1f))
+
+                // 🔻 Optional: Divider before Logout
+                androidx.compose.material3.Divider()
+
+                // 🔴 Logout item
+                NavigationDrawerItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.FavoriteBorder,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text("Log Out") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        mainNavController.navigate(AuthScreens.Logout.name)
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
             }
         }
     ) {
@@ -108,6 +129,8 @@ fun NavigationDrawer( viewModel: ReviewViewModel, mainNavController : NavControl
                     .padding(innerPadding)
             ){
                 AppNavHost(navController, viewModel)
+
+
             }
         }
     }

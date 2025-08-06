@@ -47,7 +47,7 @@ fun LogOutAlert(
        dismissButton = {
            Button(onClick = {
                viewModel.logOutAlertOpen.value = false
-               nav.navigate(Screens.Home.name)
+               nav.navigate(AuthScreens.Navigation.name)
            }) {
                Text(text = "Cancel")
            }

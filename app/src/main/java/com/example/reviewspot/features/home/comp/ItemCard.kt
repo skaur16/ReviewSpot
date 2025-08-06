@@ -42,15 +42,15 @@ fun ItemCard(item: Item, nav: NavController, viewModel: ReviewViewModel) {
             modifier = Modifier
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Item ID : ${item.itemID}",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.bodyMedium
             )
             Text(
                 text = "Item Name : ${item.itemName}",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.bodyMedium
             )
 
             Text(
@@ -58,10 +58,7 @@ fun ItemCard(item: Item, nav: NavController, viewModel: ReviewViewModel) {
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            Row(
-                modifier = Modifier.align(Alignment.End),
-                horizontalArrangement = Arrangement.Center
-            ) {
+            Row() {
                 IconButton(onClick = {
                     // Navigate to item detail/review screen
                     nav.navigate("itemDetail/${item.itemID}")

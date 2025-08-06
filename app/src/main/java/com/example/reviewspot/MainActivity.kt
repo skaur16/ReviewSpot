@@ -36,18 +36,20 @@ class MainActivity : ComponentActivity() {
                 val mainNavController = rememberNavController()
                 var startDestination = remember { mutableStateOf("Loading") }
 
-                LaunchedEffect(Unit) {
+                LaunchedEffect(key1 = viewModel.loggedInUserFound.value) {
                     viewModel.getLoggedInUser()
+
+                    if(viewModel.loggedInUserFound.value){
+                        startDestination.value = "Navigation"
+                    }
+                    else{
+                        startDestination.value = AuthScreens.Login.name
+                    }
 
                 }
 
 
-               if(viewModel.loggedInUserFound.value){
-                   startDestination.value = "Navigation"
-               }
-                else{
-                   startDestination.value = AuthScreens.Login.name
-               }
+
 
 
                 NavHost(navController = mainNavController, startDestination = startDestination.value){

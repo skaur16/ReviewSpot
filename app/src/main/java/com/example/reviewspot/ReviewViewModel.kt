@@ -232,4 +232,8 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
 
     //feature : ItemInfo
     var itemInfo = mutableStateOf<Item?>(null)
+
+    suspend fun getUserById(id : Int) : User {
+        return db.getUserByID(id)
+    }
 }

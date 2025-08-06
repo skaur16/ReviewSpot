@@ -25,6 +25,9 @@ interface ReviewDao {
     @Query("SELECT * FROM Item WHERE itemID = :itemID")
     suspend fun getItemByID(itemID: Int): Item?
 
+    @Query("SELECT * FROM User WHERE userID = :userID")
+    suspend fun getUserByID(userID: Int): User
+
     @Insert
     suspend fun insertUser(user: User)
 

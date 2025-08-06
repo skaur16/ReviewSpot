@@ -16,14 +16,17 @@ import androidx.compose.ui.unit.dp
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.room.Item
 import com.example.reviewspot.features.room.Review
+import com.example.reviewspot.features.room.User
 
 @Composable
 fun ReviewCard(review : Review, viewModel: ReviewViewModel) {
 
     var item = remember { mutableStateOf<Item?>(null) }
+    var user = remember { mutableStateOf<User?>(null) }
 
     LaunchedEffect(key1 = review.itemID){
         item.value = viewModel.getItemByID(review.itemID)
+        user.value = viewModel.getUserById(review.userID)
     }
     Card(){
         Column(
@@ -38,6 +41,10 @@ fun ReviewCard(review : Review, viewModel: ReviewViewModel) {
             Text(text = itemType)
             Text(text = "Review Text : ${review.reviewText}")
             Text(text = "Rating : ${review.rating}")
+            Text(text = "User ID : ${user.value?.userID}")
+            Text(text = "User Name : ${user.value?.firstName+" "+user.value?.lastName}")
+
+
 
         }
     }

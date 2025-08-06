@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,18 +47,29 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item : Item, nav : NavController)
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            ItemCard(item, nav = nav, viewModel = viewModel)
+            Text(text = "Item ID : ${item.itemID}")
+            Text(text = "Item Name : ${item.itemName}")
+            Text(text = "Item Type : ${item.itemType}")
 
-            Text(text = "Reviews : ")
+            Text(text = "Reviews : ",
+                style = MaterialTheme.typography.headlineMedium
+                )
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                items(viewModel.itemReviews.value){
-                    ReviewCard(review = it, viewModel = viewModel)
+            if(viewModel.itemReviews.value.isEmpty()){
+                Text(text = "No Reviews Yet")
+            }
+            else{
+
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    items(viewModel.itemReviews.value){
+                        ReviewCard(review = it, viewModel = viewModel)
+                    }
                 }
             }
+
         }
     }
 }

@@ -9,5 +9,6 @@ data class Review(
     val reviewText : String,
     val rating : Int,
     val itemID : Int,
-    val userID : Int
+    val userID : Int,
+    val timestamp: Long = System.currentTimeMillis()
 )

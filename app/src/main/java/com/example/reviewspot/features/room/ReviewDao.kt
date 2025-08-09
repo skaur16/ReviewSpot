@@ -10,10 +10,10 @@ interface ReviewDao {
     @Insert
     suspend fun insertReview(review: Review)
 
-    @Query("SELECT * FROM Review WHERE itemID = :itemID")
+    @Query("SELECT * FROM Review WHERE itemID = :itemID ORDER BY timestamp DESC")
     suspend fun getReviewsForItem(itemID: Int): List<Review>
 
-    @Query("SELECT * FROM Review WHERE userID = :userID")
+    @Query("SELECT * FROM Review WHERE userID = :userID ORDER BY timestamp DESC")
     suspend fun getReviewsByUser(userID: Int): List<Review>
 
     @Query("SELECT * FROM Item")
@@ -51,8 +51,6 @@ interface ReviewDao {
 
     @Query("DELETE FROM LoggedInUser")
     suspend fun deleteLoggedInUser()
-
-
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.reviewspot
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -134,6 +135,7 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
     fun userFoundByEmailAndPassword() : Boolean {
         viewModelScope.launch{
             userFound.value = db.getUserByEmailAndPassword(userEmail.value, userPassword.value)
+            Log.e("User Found", userFound.value.toString())
         }
         return userFound.value != null
 
@@ -181,37 +183,99 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
 
     }
 
-    fun findItemByTypeAndName() {
+    fun findItemByTypeAndName(onSuccess: () -> Unit) {
         viewModelScope.launch{
             itemFoundByNameAndType.value = db.getItemByTypeAndName(itemTypeSelected.value.name, itemNameSelected.value)
+        }.invokeOnCompletion {
+            Log.e("Item Found on completion", itemFoundByNameAndType.value.toString())
+            onSuccess()
         }
 
     }
 
-    fun addReview(onSuccess : () -> Unit){
-        viewModelScope.launch{
-            val itemId = itemFoundByNameAndType.value!!.itemID
+    fun addReview(onSuccess : () -> Unit, onError : () -> Unit){
+        try {
+        viewModelScope.launch {
+            if (itemFoundByNameAndType.value == null) {
+                onError()
+                return@launch
+            }
 
-            val review = Review(
+
+                val review = Review(
                     reviewID = 0,
                     reviewText = reviewText.value,
                     rating = ratingSelected.value,
-                    itemID = itemId,
+                    itemID = itemFoundByNameAndType.value!!.itemID,
                     userID = loggedInUser.value!!.userID
-            )
-            db.insertReview(review)
+                )
 
-        }.invokeOnCompletion {
-            onSuccess()
+                db.insertReview(review)
+
+            }.invokeOnCompletion {
+                onSuccess()
+            }
+        }catch (e : Exception){
+            onError()
         }
     }
+
+    /*fun addReview(onSuccess : () -> Unit, onError : () -> Unit){
+        viewModelScope.launch{
+            try{
+                Log.e("try", "Inside try")
+
+                findItemByTypeAndName().also {
+                    Log.e("find", "Inside find")
+                    //itemid is probably null
+                    Log.e("itembefore", itemFoundByNameAndType.value.toString())
+                    val itemId = itemFoundByNameAndType.value!!.itemID
+                    Log.e("item", itemId.toString())
+                    val user = loggedInUser.value
+                    Log.e("LoggedUser",user.toString() )
+                    Log.e("Add", "Inside add review")
+                    if(user == null ){
+                        Log.e("User Error", "User is found null")
+                        onError()
+                        return@launch
+                    }
+                    else{
+                        Log.e("Else", "Inside else")
+                        val review = Review(
+                            reviewID = 0,
+                            reviewText = reviewText.value,
+                            rating = ratingSelected.value,
+                            itemID = itemId,
+                            userID = user.userID
+                        )
+                        db.insertReview(review)
+                        onSuccess()
+                    }
+                }
+            }catch(e : Exception){
+                Log.e("Error", e.message.toString())
+                onError()
+            }
+        }
+    }*/
+
+
 
     //feature : MyReviews
     var myReviews = mutableStateOf<List<Review>>(listOf())
 
     fun getMyReviews(){
         viewModelScope.launch {
-            myReviews.value = db.getReviewsByUser(loggedInUser.value!!.userID)
+            //myReviews.value = db.getReviewsByUser(loggedInUser.value!!.userID)
+            val user = loggedInUser.value
+            if (user != null) {
+                myReviews.value = db.getReviewsByUser(user.userID)
+                Log.e("Review", myReviews.value.toString())
+            } else {
+                // Optional: log or handle this state
+                Log.e("ReviewViewModel", "Logged in user is null — cannot fetch reviews.")
+                myReviews.value = emptyList()
+            }
         }
 
     }

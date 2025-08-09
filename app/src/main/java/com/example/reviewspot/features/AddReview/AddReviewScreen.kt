@@ -28,9 +28,10 @@ import com.example.reviewspot.features.addItem.comp.ItemTypeList
 @Composable
 fun AddReviewScreen(navController: NavController, viewModel: ReviewViewModel) {
 
-    LaunchedEffect(key1 = viewModel.itemTypeSelected.value, key2 = viewModel.itemNameSelected.value) {
+    LaunchedEffect(key1 = viewModel.itemTypeSelected.value) {
+        viewModel.itemNameSelected.value = ""
         viewModel.getItemsByType()
-        viewModel.findItemByTypeAndName()
+
     }
 
     val context = LocalContext.current
@@ -82,14 +83,30 @@ fun AddReviewScreen(navController: NavController, viewModel: ReviewViewModel) {
                     }
 
                     else{
-                        viewModel.addReview() {
+                        val onSucces = {
                             Toast.makeText(
                                 context,
-                                "Review Added!",
+                                "Review Added successfully!",
                                 Toast.LENGTH_LONG
                             ).show()
 
                         }
+                        val onError = {
+                            Toast.makeText(
+                                context,
+                                "Error adding review!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        //reaching here means all conditions are satisfied and user has entered all the values correct
+
+                        if(viewModel.loggedInUserFound.value){
+                            viewModel.findItemByTypeAndName(){
+                                viewModel.addReview(onSucces, onError)
+                            }
+                        }
+
                     }
                 }
             ) {

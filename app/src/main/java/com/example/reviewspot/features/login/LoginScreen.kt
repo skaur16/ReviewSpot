@@ -1,5 +1,6 @@
 package com.example.reviewspot.features.login
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -65,6 +66,8 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                                 Toast.LENGTH_LONG
                             ).show()
 
+                            viewModel.getLoggedInUser()
+                            Log.e("Login User", viewModel.loggedInUser.value.toString())
                             nav.navigate(AuthScreens.Navigation.name)
                         }
                     }

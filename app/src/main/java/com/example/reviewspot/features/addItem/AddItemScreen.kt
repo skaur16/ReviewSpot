@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,13 +31,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.addItem.comp.ItemType
 import com.example.reviewspot.features.addItem.comp.ItemTypeList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddItemScreen(viewModel: ReviewViewModel) {
+fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
 
     val context = LocalContext.current
 

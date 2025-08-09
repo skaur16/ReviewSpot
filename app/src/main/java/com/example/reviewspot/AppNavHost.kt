@@ -35,7 +35,7 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
 
         composable(Screens.MyReviews.name) {
             //my reviews screen
-            MyReviewScreen(viewModel)
+            MyReviewScreen(viewModel, nav )
         }
 
         composable(Screens.ItemInfo.name){

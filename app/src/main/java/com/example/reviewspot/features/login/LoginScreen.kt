@@ -58,8 +58,8 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
 
             Button(
                 onClick = {
-                    if(viewModel.userFoundByEmailAndPassword()){
-                        viewModel.saveLoggedInUser(){
+                    val onSuccess = {
+                        viewModel.saveLoggedInUser() {
                             Toast.makeText(
                                 context,
                                 "Login Successful!",
@@ -71,8 +71,9 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                             nav.navigate(AuthScreens.Navigation.name)
                         }
                     }
-                    else{
-                        //show error
+
+                    //show error
+                    val onFailure = {
                         Toast.makeText(
                             context,
                             "No User found with these credentials!",
@@ -83,6 +84,11 @@ fun LoginScreen(viewModel: ReviewViewModel, nav : NavController) {
                         viewModel.userEmail.value = ""
                         viewModel.userPassword.value = ""
                     }
+                    viewModel.userFoundByEmailAndPassword(onSuccess, onFailure)
+
+
+
+
                 }
             ) {
                 Text(text = "Login")

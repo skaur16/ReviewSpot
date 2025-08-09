@@ -150,12 +150,18 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
 
     }
 
-    fun userFoundByEmailAndPassword() : Boolean {
+    fun userFoundByEmailAndPassword(onSuccess: () -> Unit, onFailure: () -> Unit)  {
         viewModelScope.launch{
             userFound.value = db.getUserByEmailAndPassword(userEmail.value, userPassword.value)
             Log.e("User Found", userFound.value.toString())
+        }.invokeOnCompletion {
+            if(userFound.value != null){
+                onSuccess()
+            }
+            else {
+                onFailure()
+            }
         }
-        return userFound.value != null
 
     }
 

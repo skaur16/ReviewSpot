@@ -2,10 +2,14 @@ package com.example.reviewspot.features.addItem
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -16,6 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -38,15 +46,25 @@ fun AddItemScreen(viewModel: ReviewViewModel) {
         }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(horizontal = 24.dp, vertical = 16.dp), // Added horizontal padding for nicer margin
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ){
+            verticalArrangement = Arrangement.spacedBy(24.dp)  // Increase spacing between elements
+        ) {
 
             Image(
                 painter = painterResource(id = viewModel.itemImage.intValue),
-                contentDescription = "Item Image"
+                contentDescription = "Item Image",
+                modifier = Modifier
+                    .size(120.dp) // Slightly bigger image for better visibility
+                    .clip(CircleShape)
+                    .border(3.dp, Color.Gray.copy(alpha = 0.5f), CircleShape) // lighter border
+                    .shadow(8.dp, CircleShape), // stronger shadow for depth
+                contentScale = ContentScale.Crop
             )
+
             OutlinedTextField(
                 value = viewModel.itemName.value,
                 onValueChange = {
@@ -56,19 +74,25 @@ fun AddItemScreen(viewModel: ReviewViewModel) {
                 singleLine = true
             )
 
-            ItemType(viewModel, ItemTypeList.entries)
+            ItemType(
+                viewModel,
+                ItemTypeList.entries
+            )
 
-            Button(onClick = {
-                viewModel.addItem{
-                    Toast.makeText(context,
-                        "Item Added",
-                        Toast.LENGTH_SHORT)
-                        .show()
+            Button(
+                onClick = {
+                    viewModel.addItem {
+                        Toast.makeText(
+                            context,
+                            "Item Added",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-                    viewModel.itemName.value = ""
-                    viewModel.itemTypeSelected.value = ItemTypeList.Movie
+                        viewModel.itemName.value = ""
+                        viewModel.itemTypeSelected.value = ItemTypeList.Movie
+                    }
                 }
-            }){
+            ) {
                 Text(text = "Add Item")
             }
         }

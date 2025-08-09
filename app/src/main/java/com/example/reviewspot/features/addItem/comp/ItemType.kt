@@ -17,7 +17,8 @@ import com.example.reviewspot.ReviewViewModel
 @Composable
 fun ItemType(
     viewModel: ReviewViewModel,
-    options: List<ItemTypeList>
+    options: List<ItemTypeList>,
+    modifier: Modifier = Modifier
 ) {
     //Dropdown to display item types
     Column(

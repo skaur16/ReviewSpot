@@ -4,17 +4,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
@@ -36,10 +41,19 @@ fun HomeScreen(viewModel: ReviewViewModel, nav : NavController) {
             IconButton(
                 onClick = {nav.navigate(Screens.AddItems.name)}
             ){
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Item"
-                )
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = MaterialTheme.colorScheme.primary, // or any color you want
+                    tonalElevation = 4.dp, // subtle shadow effect
+                    modifier = Modifier.padding(4.dp) // padding inside the IconButton
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add Item",
+                        tint = Color.White, // make icon white for contrast
+                        modifier = Modifier.padding(8.dp) // padding inside the box
+                    )
+                }
             }
         }
     )

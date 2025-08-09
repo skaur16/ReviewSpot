@@ -38,8 +38,8 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
             MyReviewScreen(viewModel)
         }
 
-        composable("ItemInfo"){
-            viewModel.itemInfo.value?.let { it1 -> ItemInfoScreen(viewModel, it1, nav) }
+        composable(Screens.ItemInfo.name){
+            viewModel.itemInfo.value?.let { it -> ItemInfoScreen(viewModel, it, nav) }
         }
 
         composable(AuthScreens.Logout.name){

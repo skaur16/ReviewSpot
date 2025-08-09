@@ -8,7 +8,7 @@ import androidx.room.Query
 interface ReviewDao {
 
     @Insert
-    suspend fun insertReview(review: Review)
+    suspend fun insertReview(review: Review) : Long
 
     @Query("SELECT * FROM Review WHERE itemID = :itemID ORDER BY timestamp DESC")
     suspend fun getReviewsForItem(itemID: Int): List<Review>
@@ -20,7 +20,7 @@ interface ReviewDao {
     suspend fun getAllItems(): List<Item>
 
     @Insert
-    suspend fun insertItem(item: Item)
+    suspend fun insertItem(item: Item) : Long
 
     @Query("SELECT * FROM Item WHERE itemID = :itemID")
     suspend fun getItemByID(itemID: Int): Item?
@@ -29,7 +29,7 @@ interface ReviewDao {
     suspend fun getUserByID(userID: Int): User
 
     @Insert
-    suspend fun insertUser(user: User)
+    suspend fun insertUser(user: User) : Long
 
     @Query("SELECT * FROM User")
     suspend fun getAllUsers() : List<User>
@@ -51,6 +51,9 @@ interface ReviewDao {
 
     @Query("DELETE FROM LoggedInUser")
     suspend fun deleteLoggedInUser()
+
+    @Query("SELECT COUNT(*) FROM Item")
+    suspend fun getItemCount(): Int
 
 
 }

@@ -1,5 +1,7 @@
 package com.example.reviewspot.features.home.comp
 
+import android.media.Image
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -44,6 +47,10 @@ fun ItemCard(item: Item, nav: NavController, viewModel: ReviewViewModel) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Image(
+                painter = painterResource(id = item.itemImage),
+                contentDescription = "Item Image"
+            )
             Text(
                 text = "Item ID : ${item.itemID}",
                 style = MaterialTheme.typography.bodyMedium

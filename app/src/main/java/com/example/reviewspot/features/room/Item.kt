@@ -8,5 +8,6 @@ import com.example.reviewspot.features.addItem.comp.ItemTypeList
 data class Item(
     @PrimaryKey(autoGenerate = true) val itemID : Int,
     val itemName : String,
-    val itemType : ItemTypeList
+    val itemType : ItemTypeList,
+    val itemImage : Int
 )

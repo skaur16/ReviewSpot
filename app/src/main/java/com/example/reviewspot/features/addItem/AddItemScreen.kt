@@ -1,6 +1,7 @@
 package com.example.reviewspot.features.addItem
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +13,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.addItem.comp.ItemType
@@ -26,6 +29,9 @@ fun AddItemScreen(viewModel: ReviewViewModel) {
 
     val context = LocalContext.current
 
+    LaunchedEffect(key1 = viewModel.itemTypeSelected.value) {
+        viewModel.getItemImage()
+    }
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Add Item") })
@@ -36,6 +42,11 @@ fun AddItemScreen(viewModel: ReviewViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ){
+
+            Image(
+                painter = painterResource(id = viewModel.itemImage.intValue),
+                contentDescription = "Item Image"
+            )
             OutlinedTextField(
                 value = viewModel.itemName.value,
                 onValueChange = {

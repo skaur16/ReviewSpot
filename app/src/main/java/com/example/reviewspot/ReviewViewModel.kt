@@ -2,6 +2,8 @@ package com.example.reviewspot
 
 import android.app.Application
 import android.util.Log
+import androidx.compose.material3.Switch
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -28,13 +30,29 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
     var itemTypeListExpanded = mutableStateOf(false)
     var itemTypeSelected = mutableStateOf(ItemTypeList.Movie)
 
+    var itemImage = mutableIntStateOf(R.drawable.none)
+    fun getItemImage() {
+        if(itemTypeSelected.value == ItemTypeList.Movie){
+            itemImage.value = R.drawable.movie
+        }
+        else if(itemTypeSelected.value == ItemTypeList.Book){
+            itemImage.value = R.drawable.book
+        }
+        else if(itemTypeSelected.value == ItemTypeList.Game){
+            itemImage.value = R.drawable.game
+        }
+        else if(itemTypeSelected.value == ItemTypeList.Course){
+            itemImage.value = R.drawable.course
+        }
+    }
 
     fun addItem(onSuccess : () -> Unit){
         viewModelScope.launch{
             val item = Item(
                 itemID = 0,
                 itemName = itemName.value,
-                itemType = itemTypeSelected.value
+                itemType = itemTypeSelected.value,
+                itemImage = itemImage.intValue
             )
             db.insertItem(item)
         }.invokeOnCompletion {
@@ -311,4 +329,7 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
             onSucces()
         }
     }
+
+
+
 }

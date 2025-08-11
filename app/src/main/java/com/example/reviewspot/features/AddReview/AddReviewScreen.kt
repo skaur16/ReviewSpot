@@ -26,8 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.AddReview.comp.ItemName
 import com.example.reviewspot.features.AddReview.comp.RatingDropDown
@@ -47,12 +49,12 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Add Review", color = Color.White) },
+                title = { Text(text = stringResource(id = R.string.AddReview), color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { nav.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(id = R.string.Back),
                             tint = Color.White
                         )
                     }
@@ -73,7 +75,7 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
             verticalArrangement = Arrangement.spacedBy(16.dp) // Increased spacing
         ) {
             Text(
-                text = "Choose Item : ",
+                text = stringResource(id = R.string.ChooseItem),
                 color = Color(0xFF03045E), // Dark blue text
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -87,48 +89,45 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
             OutlinedTextField(
                 value = viewModel.reviewText.value,
                 onValueChange = { viewModel.reviewText.value = it },
-                label = { Text(text = "Review Text : ") },
+                label = { Text(text = stringResource(id = R.string.ReviewText)) },
                 singleLine = false,
                 minLines = 3,
                 maxLines = 10,
                 modifier = Modifier.fillMaxWidth(),
-                /*colors = TextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF0077B6),
-                    unfocusedBorderColor = Color(0xFF00B4D8),
-                    focusedLabelColor = Color(0xFF03045E),
-                    unfocusedLabelColor = Color(0xFF023E8A),
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    cursorColor = Color(0xFF00B4D8)
-                )*/
             )
 
+            var pleaseSelectAnItem = stringResource(id = R.string.Pleaseselectanitem)
+            var reviewTextCannotBeEmpty = stringResource(id = R.string.ReviewTextcannotbeempty)
+            var reviewAddedSuccessfully = stringResource(id = R.string.ReviewAddedsuccessfully)
+            var errorAddingReview = stringResource(id = R.string.Erroraddingreview)
             Button(
                 onClick = {
+
                     if (viewModel.itemNameSelected.value.isEmpty() || viewModel.itemNameSelected.value.isBlank()) {
+
                         Toast.makeText(
                             context,
-                            "Please select an item!",
+                            pleaseSelectAnItem,
                             Toast.LENGTH_LONG
                         ).show()
                     } else if (viewModel.reviewText.value.isEmpty() || viewModel.reviewText.value.isBlank()) {
                         Toast.makeText(
                             context,
-                            "Review Text cannot be empty!",
+                            reviewTextCannotBeEmpty,
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
                         val onSucces = {
                             Toast.makeText(
                                 context,
-                                "Review Added successfully!",
+                                reviewAddedSuccessfully,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
                         val onError = {
                             Toast.makeText(
                                 context,
-                                "Error adding review!",
+                                errorAddingReview,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -144,7 +143,7 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Add Review", color = Color.White)
+                Text(text = stringResource(id = R.string.AddReview), color = Color.White)
             }
         }
     }

@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.R
@@ -58,12 +59,12 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Add Item", color = Color.White) },
+                title = { Text(text = stringResource(id = R.string.AddItem), color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { nav.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(id = R.string.Back),
                             tint = Color.White
                         )
                     }
@@ -86,7 +87,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
 
             Image(
                 painter = painterResource(id = viewModel.itemImage.intValue),
-                contentDescription = "Item Image",
+                contentDescription = stringResource(R.string.ItemImage),
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
@@ -100,7 +101,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.itemName.value = it
                 },
-                label = { Text(text = "Item Name") },
+                label = { Text(text = stringResource(id = R.string.ItemName)) },
                 singleLine = true
             )
 
@@ -109,12 +110,13 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
                 ItemTypeList.entries
             )
 
+            val itemAdded = stringResource(id = R.string.ItemAdded)
             Button(
                 onClick = {
                     viewModel.addItem {
                         Toast.makeText(
                             context,
-                            "Item Added",
+                            itemAdded,
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -126,7 +128,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
                     containerColor = Color(0xFF0077B6) // Medium blue button
                 )
             ) {
-                Text(text = "Add Item", color = Color.White) // White text for contrast
+                Text(text = stringResource(id = R.string.AddItem), color = Color.White) // White text for contrast
             }
         }
     }

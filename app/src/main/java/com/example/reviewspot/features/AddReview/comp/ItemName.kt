@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.room.Item
 
@@ -34,7 +36,7 @@ fun ItemName(viewModel: ReviewViewModel, options : List<Item>) {
             TextField(
                 value = viewModel.itemNameSelected.value,
                 onValueChange = {},
-                label = { Text(text = "Item Names") },
+                label = { Text(text = stringResource(id = R.string.ItemName)) },
                 readOnly = true,
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(

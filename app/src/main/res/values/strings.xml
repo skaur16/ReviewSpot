@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">ReviewSpot</string>
+    <string name="ItemType">Item Type</string>
+    <string name="AddItem">Add Item</string>
+    <string name="Back">Back</string>
+    <string name="ItemImage">Item Image</string>
+    <string name="ItemName">Item Name</string>
+    <string name="ItemAdded">Item Added</string>
+    <string name="ItemNames">Item Names</string>
+    <string name="Rating">Rating</string>
+    <string name="AddReview">Add Review</string>
+    <string name="ChooseItem">Choose Item : </string>
+    <string name="ReviewText">Review Text : </string>
+    <string name="Pleaseselectanitem">Please select an item!</string>
+    <string name="ReviewTextcannotbeempty">Review Text cannot be empty!</string>
+    <string name="ReviewAddedsuccessfully">Review Added successfully!</string>
+    <string name="Erroraddingreview">Error adding review!</string>
 </resources>

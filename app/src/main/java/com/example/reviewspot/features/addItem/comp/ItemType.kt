@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +37,7 @@ fun ItemType(
             TextField(
                 value = viewModel.itemTypeSelected.value.name,
                 onValueChange = {},
-                label = { Text(text = "Item Type") },
+                label = { Text(text = stringResource(id = R.string.ItemType)) },
                 readOnly = true,
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(

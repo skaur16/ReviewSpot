@@ -25,7 +25,7 @@ fun AppNavHost(nav : NavHostController, viewModel: ReviewViewModel) {
 
         composable(Screens.AddItems.name) {
             //add items screen
-            AddItemScreen(viewModel)
+            AddItemScreen(viewModel, nav)
         }
 
         composable(Screens.AddReview.name) {

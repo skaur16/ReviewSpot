@@ -29,9 +29,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.addItem.comp.ItemType
 import com.example.reviewspot.features.addItem.comp.ItemTypeList
@@ -45,6 +47,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
     LaunchedEffect(key1 = viewModel.itemTypeSelected.value) {
         viewModel.getItemImage()
     }
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Add Item") })

@@ -1,5 +1,6 @@
 package com.example.reviewspot.features.myReviews
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -29,8 +32,8 @@ import com.example.reviewspot.features.myReviews.comp.ReviewCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyReviewScreen(viewModel : ReviewViewModel, nav : NavController) {
-    LaunchedEffect (key1 = Unit) {
+fun MyReviewScreen(viewModel: ReviewViewModel, nav: NavController) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.getMyReviews()
     }
 
@@ -38,41 +41,56 @@ fun MyReviewScreen(viewModel : ReviewViewModel, nav : NavController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "My Reviews")
-                }
+                    Text(
+                        text = "My Reviews",
+                        color = Color.White
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { nav.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF023E8A) // Dark blue top bar
+                )
             )
         },
+        containerColor = Color(0xFFCAF0F8), // Lightest blue background
         floatingActionButton = {
-            //floating action button
             IconButton(
-                onClick = {nav.navigate(Screens.AddReview.name)}
-            ){
+                onClick = { nav.navigate(Screens.AddReview.name) }
+            ) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = MaterialTheme.colorScheme.primary, // or any color you want
-                    tonalElevation = 4.dp, // subtle shadow effect
-                    modifier = Modifier.padding(4.dp) // padding inside the IconButton
+                    color = Color(0xFF0077B6), // Bright blue button
+                    tonalElevation = 4.dp,
+                    modifier = Modifier.padding(4.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Add Item",
-                        tint = Color.White, // make icon white for contrast
-                        modifier = Modifier.padding(8.dp) // padding inside the box
+                        contentDescription = "Add Review",
+                        tint = Color.White,
+                        modifier = Modifier.padding(8.dp)
                     )
                 }
             }
         }
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            items(viewModel.myReviews.value){
+        ) {
+            items(viewModel.myReviews.value) {
                 ReviewCard(it, viewModel)
             }
         }
     }
-
-
 }

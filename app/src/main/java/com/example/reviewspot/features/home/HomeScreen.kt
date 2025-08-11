@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,9 +44,17 @@ fun HomeScreen(viewModel: ReviewViewModel, nav: NavController) {
                 title = {
                     Text(
                         text = "Home",
-                        modifier = Modifier.padding(bottom = 16.dp),
                         color = Color.White
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { nav.navigate(Screens.Home.name) }) {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF023E8A) // deep navy

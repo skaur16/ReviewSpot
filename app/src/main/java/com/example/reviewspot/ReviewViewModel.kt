@@ -2,6 +2,7 @@ package com.example.reviewspot
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -47,17 +48,25 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
     }
 
     fun addItem(onSuccess : () -> Unit){
-        viewModelScope.launch{
-            val item = Item(
-                itemID = 0,
-                itemName = itemName.value,
-                itemType = itemTypeSelected.value,
-                itemImage = itemImage.intValue
-            )
-            db.insertItem(item)
-        }.invokeOnCompletion {
-            onSuccess()
-        }
+       if(itemName.value.isEmpty()){
+           Toast.makeText(getApplication(),
+               "Item Name is required",
+               Toast.LENGTH_SHORT).show()
+       }
+       else{
+
+           viewModelScope.launch{
+               val item = Item(
+                   itemID = 0,
+                   itemName = itemName.value,
+                   itemType = itemTypeSelected.value,
+                   itemImage = itemImage.intValue
+               )
+               db.insertItem(item)
+           }.invokeOnCompletion {
+               onSuccess()
+           }
+       }
     }
 
     //feature : home

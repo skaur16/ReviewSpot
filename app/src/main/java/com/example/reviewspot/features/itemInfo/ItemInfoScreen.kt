@@ -1,5 +1,6 @@
 package com.example.reviewspot.features.itemInfo
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,23 +9,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.ReviewViewModel
-import com.example.reviewspot.features.home.comp.ItemCard
 import com.example.reviewspot.features.myReviews.comp.ReviewCard
 import com.example.reviewspot.features.room.Item
 
@@ -40,10 +47,28 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Item Info")
-                }
+                    Text(
+                        text = "Item Info",
+                        modifier = Modifier.padding(bottom = 16.dp), // Added padding to match HomeScreen
+                        color = Color.White
+                    )
+
+                },
+                navigationIcon = {
+                    IconButton(onClick = { nav.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF023E8A) // Changed to match HomeScreen
+                )
             )
-        }
+        },
+        containerColor = Color(0xFFCAF0F8)
     ) { paddingValues ->
 
         Column(
@@ -60,35 +85,39 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // Item image - rounded corners with size
-                androidx.compose.foundation.Image(
+                Image(
                     painter = painterResource(id = item.itemImage),
                     contentDescription = "Item Image",
-                    modifier = Modifier.size(140.dp)
-                        .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp)),
-                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                    modifier = Modifier
+                        .size(140.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.Crop
                 )
 
                 Text(
                     text = item.itemName,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color(0xFF03045E)
                 )
                 Text(
                     text = item.itemType.name,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = Color(0xFF0077B6)
                 )
             }
 
             // Separation line
-            androidx.compose.material3.Divider(
+            Divider(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                thickness = 1.dp
+                thickness = 1.dp,
+                color = Color(0xFF90E0EF)
             )
 
             // Reviews header
             Text(
                 text = "Reviews",
                 style = MaterialTheme.typography.headlineSmall,
+                color = Color(0xFF03045E),
                 modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
             )
 
@@ -102,7 +131,11 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
                 content = {
                     if (viewModel.itemReviews.value.isEmpty()) {
                         item {
-                            Text("No Reviews Yet", modifier = Modifier.padding(16.dp))
+                            Text(
+                                text = "No Reviews Yet",
+                                modifier = Modifier.padding(16.dp),
+                                color = Color(0xFF0096C7)
+                            )
                         }
                     } else {
                         items(viewModel.itemReviews.value) { review ->

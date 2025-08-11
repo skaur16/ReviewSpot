@@ -2,6 +2,7 @@ package com.example.reviewspot.features.myReviews.comp
 
 import android.R
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,95 +47,114 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
         user.value = viewModel.getUserById(review.userID)
     }
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.End
-    ) {
-        Text(
-            text = formatDate(review.timestamp),
-            style = MaterialTheme.typography.bodySmall,
-            color = Color.DarkGray
-        )
-    }
-
-    Spacer(modifier = Modifier.height(4.dp))
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Smaller rounded image
-        Image(
-            painter = painterResource(id = item.value?.itemImage ?: android.R.drawable.ic_menu_report_image),
-            contentDescription = "Item Image",
-            modifier = Modifier
-                .size(48.dp)
-                .clip(RoundedCornerShape(12.dp)),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        // Item name beside image
-        Text(
-            text = item.value?.itemName ?: "Loading...",
-            style = MaterialTheme.typography.titleMedium,
-            maxLines = 1
-        )
-    }
-
-    Spacer(modifier = Modifier.height(8.dp))
-
-// Review text full width
-    Column(
+    // Wrapped all content in a Card
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(10.dp)
+            .padding(horizontal = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFADE8F4) // Light pastel background for the card
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), // Added elevation for separation
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = formatDate(review.timestamp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFF0077B6)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = item.value?.itemImage ?: android.R.drawable.ic_menu_report_image),
+                    contentDescription = "Item Image",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Text(
+                    text = item.value?.itemName ?: "Loading...",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color(0xFF03045E),
+                    maxLines = 1
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Review text full width
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 2.dp,
+                        color = Color(0xFF00B4D8),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .background(
+                        color = Color.White, // Using white for the inner text box background
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .padding(12.dp)
+            ) {
+                Text(
+                    text = review.reviewText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFF03045E)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Rating full width under review
+            Text(
+                text = "Rating: ${review.rating}",
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                color = Color(0xFF0096C7)
             )
-            .padding(12.dp)
-    ) {
-        Text(
-            text = review.reviewText,
-            style = MaterialTheme.typography.bodyMedium,
-        )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // User name small
+            Text(
+                text = "By : ${user.value?.firstName.orEmpty()} ${user.value?.lastName.orEmpty()}",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color(0xFF0077B6)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Time at bottom right
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = formatTime(review.timestamp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFF0077B6)
+                )
+            }
+        }
     }
 
     Spacer(modifier = Modifier.height(8.dp))
-
-// Rating full width under review
-    Text(
-        text = "Rating: ${review.rating}",
-        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.primary
-    )
-
-    Spacer(modifier = Modifier.height(4.dp))
-
-// User name small
-    Text(
-        text = "By : ${user.value?.firstName.orEmpty()} ${user.value?.lastName.orEmpty()}",
-        style = MaterialTheme.typography.bodySmall,
-        color = Color.Gray
-    )
-    Spacer(modifier = Modifier.height(4.dp))
-
-    // Time at bottom right
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.End
-    ) {
-        Text(
-            text = formatTime(review.timestamp),
-            style = MaterialTheme.typography.bodySmall,
-            color = Color.DarkGray
-        )
-    }
-
-    Spacer(modifier = Modifier.height(8.dp))
-
 }
 
 fun formatDate(timestamp: Long): String {

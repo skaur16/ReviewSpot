@@ -2,6 +2,8 @@ package com.example.reviewspot
 
 import android.app.Application
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.reviewspot.ReviewApp.Companion.db
 import com.example.reviewspot.features.addItem.comp.ItemTypeList
 import com.example.reviewspot.features.room.Item
@@ -22,16 +24,41 @@ companion object{
     override fun onCreate() {
         super.onCreate()
 
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // no-op
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // no-op
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // no-op
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // no-op
+            }
+        }
+
         db = Room.databaseBuilder(
             applicationContext,
             ReviewDatabase::class.java,
             "ReviewDatabase"
-        ).fallbackToDestructiveMigration()
+        ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
             .build()
 
         seedDatabaseIfEmpty()
     }
 }
+
 
 private fun seedDatabaseIfEmpty() {
     CoroutineScope(Dispatchers.IO).launch {

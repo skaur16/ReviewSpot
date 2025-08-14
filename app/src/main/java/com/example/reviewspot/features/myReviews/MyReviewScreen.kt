@@ -1,6 +1,5 @@
 package com.example.reviewspot.features.myReviews
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,7 +12,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,67 +28,24 @@ import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
 import com.example.reviewspot.features.myReviews.comp.ReviewCard
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyReviewScreen(viewModel: ReviewViewModel, nav: NavController) {
     LaunchedEffect(key1 = Unit) {
         viewModel.getMyReviews()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "My Reviews",
-                        color = Color.White
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { nav.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A) // Dark blue top bar
-                )
-            )
-        },
-        containerColor = Color(0xFFCAF0F8), // Lightest blue background
-        floatingActionButton = {
-            IconButton(
-                onClick = { nav.navigate(Screens.AddReview.name) }
-            ) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFF0077B6), // Bright blue button
-                    tonalElevation = 4.dp,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add Review",
-                        tint = Color.White,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-            }
-        }
+    // Main content without Scaffold and TopAppBar
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            //.background(Color(0xFFCAF0F8)) // Lightest blue background
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(viewModel.myReviews.value) {
-                ReviewCard(it, viewModel)
-            }
+        items(viewModel.myReviews.value) {
+            ReviewCard(it, viewModel)
         }
     }
 }
+

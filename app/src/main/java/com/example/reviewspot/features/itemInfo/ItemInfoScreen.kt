@@ -1,6 +1,7 @@
 package com.example.reviewspot.features.itemInfo
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,17 +11,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -35,7 +29,6 @@ import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.myReviews.comp.ReviewCard
 import com.example.reviewspot.features.room.Item
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
 
@@ -43,107 +36,76 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
         viewModel.getReviewsByItemId(item.itemID)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Item Info",
-                        modifier = Modifier.padding(bottom = 16.dp), // Added padding to match HomeScreen
-                        color = Color.White
-                    )
-
-                },
-                navigationIcon = {
-                    IconButton(onClick = { nav.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A) // Changed to match HomeScreen
-                )
-            )
-        },
-        containerColor = Color(0xFFCAF0F8)
-    ) { paddingValues ->
-
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFCAF0F8)) // Lightest blue background
+            .padding(16.dp)
+    ) {
+        // Fixed item info at top
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Fixed item info at top
-            Column(
+            // Item image - rounded corners with size
+            Image(
+                painter = painterResource(id = item.itemImage),
+                contentDescription = "Item Image",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // Item image - rounded corners with size
-                Image(
-                    painter = painterResource(id = item.itemImage),
-                    contentDescription = "Item Image",
-                    modifier = Modifier
-                        .size(140.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
-                )
-
-                Text(
-                    text = item.itemName,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF03045E)
-                )
-                Text(
-                    text = item.itemType.name,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF0077B6)
-                )
-            }
-
-            // Separation line
-            Divider(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                thickness = 1.dp,
-                color = Color(0xFF90E0EF)
+                    .size(140.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop
             )
 
-            // Reviews header
             Text(
-                text = "Reviews",
-                style = MaterialTheme.typography.headlineSmall,
-                color = Color(0xFF03045E),
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
+                text = item.itemName,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color(0xFF03045E)
             )
+            Text(
+                text = item.itemType.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color(0xFF0077B6)
+            )
+        }
 
-            // Scrollable list of reviews filling remaining space
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                content = {
-                    if (viewModel.itemReviews.value.isEmpty()) {
-                        item {
-                            Text(
-                                text = "No Reviews Yet",
-                                modifier = Modifier.padding(16.dp),
-                                color = Color(0xFF0096C7)
-                            )
-                        }
-                    } else {
-                        items(viewModel.itemReviews.value) { review ->
-                            ReviewCard(review = review, viewModel = viewModel)
-                        }
-                    }
+        // Separation line
+        Divider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = 1.dp,
+            color = Color(0xFF90E0EF)
+        )
+
+        // Reviews header
+        Text(
+            text = "Reviews",
+            style = MaterialTheme.typography.headlineSmall,
+            color = Color(0xFF03045E),
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        // Scrollable list of reviews filling remaining space
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (viewModel.itemReviews.value.isEmpty()) {
+                item {
+                    Text(
+                        text = "No Reviews Yet",
+                        modifier = Modifier.padding(16.dp),
+                        color = Color(0xFF0096C7)
+                    )
                 }
-            )
+            } else {
+                items(viewModel.itemReviews.value) { review ->
+                    ReviewCard(review = review, viewModel = viewModel)
+                }
+            }
         }
     }
 }

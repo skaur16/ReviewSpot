@@ -48,7 +48,7 @@ import com.example.reviewspot.features.addItem.comp.ItemTypeList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
+fun AddItemScreen(viewModel: ReviewViewModel, nav: NavController) {
 
     val context = LocalContext.current
 
@@ -56,80 +56,60 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav : NavController) {
         viewModel.getItemImage()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(id = R.string.AddItem), color = Color.White) },
-                navigationIcon = {
-                    IconButton(onClick = { nav.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.Back),
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A) // Dark blue top bar
-                )
-            )
-        },
-        containerColor = Color(0xFFCAF0F8) // Lightest blue background
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFCAF0F8)) // Lightest blue background
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
+
+        Image(
+            painter = painterResource(id = viewModel.itemImage.intValue),
+            contentDescription = stringResource(R.string.ItemImage),
             modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .size(120.dp)
+                .clip(CircleShape)
+                .border(3.dp, Color(0xFF0096C7), CircleShape) // Accent blue border
+                .shadow(8.dp, CircleShape),
+            contentScale = ContentScale.Crop
+        )
+
+        OutlinedTextField(
+            value = viewModel.itemName.value,
+            onValueChange = { viewModel.itemName.value = it },
+            label = { Text(text = stringResource(id = R.string.ItemName)) },
+            singleLine = true
+        )
+
+        ItemType(
+            viewModel,
+            ItemTypeList.entries
+        )
+
+        val itemAdded = stringResource(id = R.string.ItemAdded)
+        Button(
+            onClick = {
+                viewModel.addItem {
+                    Toast.makeText(
+                        context,
+                        itemAdded,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    viewModel.itemName.value = ""
+                    viewModel.itemTypeSelected.value = ItemTypeList.Movie
+                }
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF0077B6) // Medium blue button
+            )
         ) {
-
-            Image(
-                painter = painterResource(id = viewModel.itemImage.intValue),
-                contentDescription = stringResource(R.string.ItemImage),
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-                    .border(3.dp, Color(0xFF0096C7), CircleShape) // Accent blue border
-                    .shadow(8.dp, CircleShape),
-                contentScale = ContentScale.Crop
+            Text(
+                text = stringResource(id = R.string.AddItem),
+                color = Color.White // White text for contrast
             )
-
-            OutlinedTextField(
-                value = viewModel.itemName.value,
-                onValueChange = {
-                    viewModel.itemName.value = it
-                },
-                label = { Text(text = stringResource(id = R.string.ItemName)) },
-                singleLine = true
-            )
-
-            ItemType(
-                viewModel,
-                ItemTypeList.entries
-            )
-
-            val itemAdded = stringResource(id = R.string.ItemAdded)
-            Button(
-                onClick = {
-                    viewModel.addItem {
-                        Toast.makeText(
-                            context,
-                            itemAdded,
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        viewModel.itemName.value = ""
-                        viewModel.itemTypeSelected.value = ItemTypeList.Movie
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0077B6) // Medium blue button
-                )
-            ) {
-                Text(text = stringResource(id = R.string.AddItem), color = Color.White) // White text for contrast
-            }
         }
     }
 }

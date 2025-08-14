@@ -25,9 +25,14 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,10 +52,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavController) {
-
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    var selectedTitle by remember { mutableStateOf("Home") }
 
     val menuItems = listOf(
         Screens.Home.name,
@@ -64,7 +70,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(280.dp),
-                drawerContainerColor = androidx.compose.ui.graphics.Color(0xFFCAF0F8) // lightest blue background
+                drawerContainerColor = Color(0xFFCAF0F8)
             ) {
                 // Header with image
                 Image(
@@ -84,21 +90,19 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                             Icon(
                                 imageVector = Icons.Default.FavoriteBorder,
                                 contentDescription = null,
-                                tint = androidx.compose.ui.graphics.Color(0xFF0077B6) // medium blue
+                                tint = Color(0xFF0077B6)
                             )
                         },
                         label = {
-                            Text(
-                                item,
-                                color = androidx.compose.ui.graphics.Color(0xFF03045E) // dark blue text
-                            )
+                            Text(item, color = Color(0xFF03045E))
                         },
-                        selected = false,
+                        selected = selectedTitle == item,
                         colors = NavigationDrawerItemDefaults.colors(
-                            unselectedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
-                            selectedContainerColor = androidx.compose.ui.graphics.Color(0xFFADE8F4) // light selection
+                            unselectedContainerColor = Color.Transparent,
+                            selectedContainerColor = Color(0xFFADE8F4)
                         ),
                         onClick = {
+                            selectedTitle = item // 👈 change title
                             scope.launch { drawerState.close() }
                             navController.navigate(item)
                         },
@@ -107,32 +111,35 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         thickness = 1.dp,
-                        color = Color(0xFF90E0EF) // soft blue from your palette
+                        color = Color(0xFF90E0EF)
                     )
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
 
-
-                // Logout item
+                // Display logged-in user
+                Text(
+                    text = "${viewModel.loggedInUser.value?.firstName ?: ""} ${viewModel.loggedInUser.value?.lastName ?: ""}",
+                    color = Color(0xFF03045E),
+                    modifier = Modifier
+                        .padding(start = 16.dp, bottom = 8.dp)
+                )
+                // Logout
                 NavigationDrawerItem(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.FavoriteBorder,
                             contentDescription = null,
-                            tint = androidx.compose.ui.graphics.Color(0xFF0077B6)
+                            tint = Color(0xFF0077B6)
                         )
                     },
                     label = {
-                        Text(
-                            "Log Out",
-                            color = androidx.compose.ui.graphics.Color(0xFF03045E)
-                        )
+                        Text("Log Out", color = Color(0xFF03045E))
                     },
                     selected = false,
                     colors = NavigationDrawerItemDefaults.colors(
-                        unselectedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
-                        selectedContainerColor = androidx.compose.ui.graphics.Color(0xFFADE8F4) // light selection
+                        unselectedContainerColor = Color.Transparent,
+                        selectedContainerColor = Color(0xFFADE8F4)
                     ),
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -143,7 +150,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     thickness = 1.dp,
-                    color = Color(0xFF90E0EF) // soft blue from your palette
+                    color = Color(0xFF90E0EF)
                 )
             }
         }
@@ -152,10 +159,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(
-                            text = "ReviewSpot",
-                            color = androidx.compose.ui.graphics.Color.White
-                        )
+                        Text(selectedTitle, color = Color.White) // 👈 dynamic title here
                     },
                     navigationIcon = {
                         IconButton(onClick = {
@@ -164,12 +168,12 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                             Icon(
                                 Icons.Default.Menu,
                                 contentDescription = "Menu",
-                                tint = androidx.compose.ui.graphics.Color.White
+                                tint = Color.White
                             )
                         }
                     },
-                    colors = androidx.compose.material3.TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = androidx.compose.ui.graphics.Color(0xFF023E8A) // strong navy blue
+                    colors = TopAppBarDefaults.smallTopAppBarColors(
+                        containerColor = Color(0xFF023E8A)
                     )
                 )
             }
@@ -178,10 +182,11 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(androidx.compose.ui.graphics.Color(0xFF90E0EF)) // soft blue background
+                    .background(Color(0xFF90E0EF))
             ) {
                 AppNavHost(navController, viewModel)
             }
         }
     }
 }
+

@@ -33,75 +33,17 @@ import com.example.reviewspot.features.home.comp.ItemCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: ReviewViewModel, nav: NavController) {
-
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         viewModel.getAllItems()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Home",
-                        color = Color.White
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { nav.navigate(Screens.Home.name) }) {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A) // deep navy
-                )
-            )
-        },
-        modifier = Modifier.background(Color(0xFFCAF0F8)), // very light background
-
-        floatingActionButton = {
-            IconButton(
-                onClick = { nav.navigate(Screens.AddItems.name) }
-            ) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFF0077B6), // bright blue
-                    tonalElevation = 4.dp,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add Item",
-                        tint = Color.White,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .background(Color(0xFFCAF0F8)) // very light background
-        ) {
-            LazyColumn(
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(viewModel.allItems.value) { item ->
-                    /*Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        //color = Color(0xFFADE8F4), // light pastel card background
-                        tonalElevation = 4.dp
-                    ) {*/
-                        ItemCard(item, nav, viewModel)
-                    //}
-                }
-            }
+    LazyColumn(
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.background(Color(0xFFCAF0F8))
+    ) {
+        items(viewModel.allItems.value) { item ->
+            ItemCard(item, nav, viewModel)
         }
     }
 }

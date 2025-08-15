@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.logout.comp.LogOutAlert
 
@@ -21,7 +23,7 @@ fun LogOutScreen(
 ) {
    Scaffold(
        topBar = {
-           Text(text = "Log Out")
+           Text(text =stringResource(id = R.string.logout_screen_title))
        }
    ) {
        Column(

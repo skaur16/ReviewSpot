@@ -25,11 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.AuthScreens
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
 
@@ -44,16 +47,16 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Register",
-                        color = Color.White
+                        text = stringResource(id = R.string.register),
+                        color = colorResource(id = R.color.white)
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A)
+                    containerColor = colorResource(id = R.color.deep_navy)
                 )
             )
         },
-        containerColor = Color(0xFFCAF0F8)
+        containerColor = colorResource(id = R.color.lightest_blue)
     ){
         Column(
             modifier = Modifier
@@ -64,8 +67,8 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
             verticalArrangement = Arrangement.Center
         ){
             Text(
-                text = "Create an Account",
-                color = Color(0xFF03045E),
+                text = stringResource(id = R.string.create_account),
+                color = colorResource(id = R.color.deep_navy),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
@@ -75,7 +78,7 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.userFirstName.value = it
                 },
-                label = { Text(text = "First Name") },
+                label = { Text(text = stringResource(id = R.string.first_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 /*colors = TextFieldDefaults.colors(
@@ -95,7 +98,7 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.userLastName.value = it
                 },
-                label = { Text(text = "Last Name") },
+                label = { Text(text = stringResource(id = R.string.last_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 /*colors = TextFieldDefaults.colors(
@@ -115,7 +118,7 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.userEmail.value = it
                 },
-                label = { Text(text = "Email") },
+                label = { Text(text = stringResource(id = R.string.email)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 /*colors = TextFieldDefaults.colors(
@@ -135,7 +138,7 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.userPassword.value = it
                 },
-                label = { Text(text = "Password") },
+                label = { Text(text = stringResource(id = R.string.password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
@@ -156,7 +159,7 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 onValueChange = {
                     viewModel.userConfirmPassword.value = it
                 },
-                label = { Text(text = "Confirm Password") },
+                label = { Text(text = stringResource(id = R.string.confirm_password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
@@ -178,14 +181,14 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                         viewModel.saveUser(){
                             Toast.makeText(
                                 context,
-                                "User Registered Successfully!",
+                                R.string.user_registered,
                                 Toast.LENGTH_SHORT
                             ).show()
 
                             nav.navigate(AuthScreens.Login.name)
                             viewModel.resetRegisterFields()
                             viewModel.getAllUsers(){
-                                Log.d("Users", viewModel.registeredUsers.value.toString())
+                                //Log.d("Users", viewModel.registeredUsers.value.toString())
                             }
                         }
                     }
@@ -200,25 +203,25 @@ fun RegisterScreen(viewModel: ReviewViewModel, nav : NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0077B6)
+                    containerColor = colorResource(id = R.color.medium_blue)
                 )
             ){
-                Text(text = "Register", color = Color.White)
+                Text(text = stringResource(id = R.string.register), color = colorResource(id = R.color.white))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(){
                 Text(
-                    text = "Already have an account?",
-                    color = Color(0xFF03045E)
+                    text = stringResource(id = R.string.already_have_account),
+                    color = colorResource(id = R.color.deep_navy)
                 )
                 Text(
-                    text = " Login",
+                    text = stringResource(id = R.string.login),
                     modifier = Modifier.clickable {
                         nav.navigate(AuthScreens.Login.name)
                     },
-                    color = Color(0xFF0096C7),
+                    color = colorResource(id = R.color.accent_blue),
                     fontWeight = FontWeight.Bold
                 )
 

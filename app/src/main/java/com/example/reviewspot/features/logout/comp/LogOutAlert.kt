@@ -11,10 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.AuthScreens
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
 
@@ -37,18 +40,18 @@ fun LogOutAlert(
                 onClick = {
                     viewModel.logOutAlertOpen.value = false
                     viewModel.deleteLoggedInUser() {
-                        Toast.makeText(context, "Logged Out Successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.logged_out_success, Toast.LENGTH_SHORT).show()
                         nav.navigate(AuthScreens.Login.name)
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0077B6) // Medium blue for the confirm button
+                    containerColor = colorResource(id = R.color.medium_blue) // Medium blue for the confirm button
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text = "Log Out!",
-                    color = Color.White
+                    text = stringResource(id = R.string.log_out),
+                    color = colorResource(id = R.color.white)
                 )
             }
         },
@@ -59,28 +62,28 @@ fun LogOutAlert(
                     nav.navigate(AuthScreens.Navigation.name)
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFCAF0F8), // Lightest blue for the cancel button
-                    contentColor = Color(0xFF03045E) // Dark text on light background
+                    containerColor = colorResource(id = R.color.light_blue), // Lightest blue for the cancel button
+                    contentColor = colorResource(id = R.color.deep_navy)// Dark text on light background
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel))
             }
         },
         title = {
             Text(
-                text = "Log Out Alert!",
+                text = stringResource(id = R.string.logout_alert_title),
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF03045E) // Dark text for the title
+                color = colorResource(id = R.color.deep_navy) // Dark text for the title
             )
         },
         text = {
             Text(
-                text = "Are you sure you want to log out?",
-                color = Color(0xFF03045E) // Dark text for the body
+                text = stringResource(id = R.string.logout_alert_message),
+                color = colorResource(id = R.color.deep_navy) // Dark text for the body
             )
         },
-        containerColor = Color.White, // White background for the dialog itself
+        containerColor = colorResource(id = R.color.white), // White background for the dialog itself
         shape = RoundedCornerShape(12.dp)
     )
 }

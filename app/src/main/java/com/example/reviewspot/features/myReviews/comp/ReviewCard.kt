@@ -39,6 +39,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
@@ -57,7 +59,7 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFADE8F4) // Light pastel background for the card
+            containerColor = colorResource(id = com.example.reviewspot.R.color.light_blue_card) // Light pastel background for the card
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), // Added elevation for separation
         shape = RoundedCornerShape(12.dp)
@@ -67,24 +69,11 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(
-                    text = formatDate(review.timestamp),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFF0077B6)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     painter = painterResource(id = item.value?.itemImage ?: android.R.drawable.ic_menu_report_image),
-                    contentDescription = "Item Image",
+                    contentDescription = stringResource(id = com.example.reviewspot.R.string.item_image),
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(12.dp)),
@@ -94,9 +83,9 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Text(
-                    text = item.value?.itemName ?: "Loading...",
+                    text = item.value?.itemName ?: stringResource(id = com.example.reviewspot.R.string.loading),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color(0xFF03045E),
+                    color = colorResource(id = com.example.reviewspot.R.color.text_dark),
                     maxLines = 1
                 )
             }
@@ -109,11 +98,11 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
                     .fillMaxWidth()
                     .border(
                         width = 2.dp,
-                        color = Color(0xFF00B4D8),
+                        color = colorResource(id = com.example.reviewspot.R.color.accent_blue),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .background(
-                        color = Color.White, // Using white for the inner text box background
+                        color = colorResource(id = R.color.white), // Using white for the inner text box background
                         shape = RoundedCornerShape(10.dp)
                     )
                     .padding(12.dp)
@@ -121,7 +110,7 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
                 Text(
                     text = review.reviewText,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF03045E)
+                    color = colorResource(id = com.example.reviewspot.R.color.text_dark)
                 )
             }
 
@@ -129,9 +118,9 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
 
             // Rating full width under review
             Text(
-                text = "Rating: ${review.rating}",
+                text = stringResource(id = com.example.reviewspot.R.string.rating, review.rating),
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color(0xFF0096C7)
+                color =  colorResource(id = com.example.reviewspot.R.color.medium_blue)
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -141,8 +130,8 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
                 for (i in 1..5) {
                     Icon(
                         imageVector = if (i <= review.rating) Icons.Filled.Star else Icons.Outlined.Star,
-                        contentDescription = "$i Star",
-                        tint = if (i <= review.rating) Color.Yellow else Color.Gray,
+                        contentDescription = stringResource(id = com.example.reviewspot.R.string.star_count, i),
+                        tint = if (i <= review.rating) colorResource(id = com.example.reviewspot.R.color.yellow) else colorResource(id = com.example.reviewspot.R.color.gray),
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -152,9 +141,13 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
 
             // User name small
             Text(
-                text = "By : ${user.value?.firstName.orEmpty()} ${user.value?.lastName.orEmpty()}",
+                text = stringResource(
+                    id = com.example.reviewspot.R.string.by_user,
+                    user.value?.firstName.orEmpty(),
+                    user.value?.lastName.orEmpty()
+                ),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF0077B6)
+                color = colorResource(id = com.example.reviewspot.R.color.medium_blue)
             )
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -170,7 +163,7 @@ fun ReviewCard(review: Review, viewModel: ReviewViewModel) {
                         )
                     }",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFF0077B6)
+                    color = colorResource(id = com.example.reviewspot.R.color.medium_blue)
                 )
             }
         }

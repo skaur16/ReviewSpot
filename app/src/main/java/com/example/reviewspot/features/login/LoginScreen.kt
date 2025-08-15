@@ -25,11 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.AuthScreens
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
 
@@ -44,16 +47,16 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Login",
-                        color = Color.White
+                        text = stringResource(id = R.string.login),
+                        color =  colorResource(id = R.color.white)
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF023E8A)
+                    containerColor = colorResource(id = R.color.darkBlue)
                 )
             )
         },
-        containerColor = Color(0xFFCAF0F8)
+        containerColor = colorResource(id = R.color.lightest_blue)
     ) {
         Column(
             modifier = Modifier
@@ -64,8 +67,8 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Welcome Back!",
-                color = Color(0xFF03045E),
+                text = stringResource(id = R.string.welcomeBack),
+                color = colorResource(id = R.color.deepNavy),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
@@ -75,17 +78,9 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
                 onValueChange = {
                     viewModel.userEmail.value = it
                 },
-                label = { Text(text = "Email") },
+                label = { Text(stringResource(id = R.string.email)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                /*colors = TextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF0077B6),
-                    unfocusedBorderColor = Color(0xFF00B4D8),
-                    focusedLabelColor = Color(0xFF03045E),
-                    unfocusedLabelColor = Color(0xFF023E8A),
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
-                )*/
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -95,18 +90,10 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
                 onValueChange = {
                     viewModel.userPassword.value = it
                 },
-                label = { Text(text = "Password") },
+                label = { Text(text = stringResource(id = R.string.password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
-                /*colors = TextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF0077B6),
-                    unfocusedBorderColor = Color(0xFF00B4D8),
-                    focusedLabelColor = Color(0xFF03045E),
-                    unfocusedLabelColor = Color(0xFF023E8A),
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
-                )*/
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -117,18 +104,18 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
                         viewModel.saveLoggedInUser() {
                             Toast.makeText(
                                 context,
-                                "Login Successful!",
+                                R.string.loginSuccess,
                                 Toast.LENGTH_LONG
                             ).show()
                             viewModel.getLoggedInUser()
-                            Log.e("Login User", viewModel.loggedInUser.value.toString())
+                            //Log.e("Login User", viewModel.loggedInUser.value.toString())
                             nav.navigate(AuthScreens.Navigation.name)
                         }
                     }
                     val onFailure = {
                         Toast.makeText(
                             context,
-                            "No User found with these credentials!",
+                            R.string.loginFailed,
                             Toast.LENGTH_LONG
                         ).show()
                         viewModel.userEmail.value = ""
@@ -138,25 +125,25 @@ fun LoginScreen(viewModel: ReviewViewModel, nav: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0077B6)
+                    containerColor = colorResource(id = R.color.mediumBlue)
                 )
             ) {
-                Text(text = "Login", color = Color.White)
+                Text(text = stringResource(id = R.string.login), color = colorResource(id = R.color.deepNavy))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row {
                 Text(
-                    text = "Don't have an account?",
-                    color = Color(0xFF03045E)
+                    text = stringResource(id = R.string.dontHaveAccount),
+                    color = colorResource(id = R.color.deepNavy)
                 )
                 Text(
-                    text = " Register",
+                    text = stringResource(id = R.string.register),
                     modifier = Modifier.clickable {
                         nav.navigate(AuthScreens.Register.name)
                     },
-                    color = Color(0xFF0096C7),
+                    color = colorResource(id = R.color.accentBlue),
                     fontWeight = FontWeight.Bold
                 )
             }

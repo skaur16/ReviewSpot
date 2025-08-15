@@ -19,4 +19,9 @@
     <color name="deepNavy">#03045E</color>
     <color name="mediumBlue">#0077B6</color>
     <color name="accentBlue">#0096C7</color>
+    <color name="darkBlue">#023E8A</color>
+    <color name="lightestBlue">#CAF0F8</color>
+    <color name="light_blue">#CAF0F8</color>
+    <color name="light_blue_card">#ADE8F4</color>
+    <color name="text_dark">#03045E</color>
 </resources>

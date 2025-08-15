@@ -29,4 +29,6 @@
     <color name="dark_navy">#03045E</color>
     <color name="light_blue_divider">#90E0EF</color>
     <color name="border_blue">#00B4D8</color>
+    <color name="background_light_blue">#CAF0F8</color>
+    <color name="divider_blue">#90E0EF</color>
 </resources>

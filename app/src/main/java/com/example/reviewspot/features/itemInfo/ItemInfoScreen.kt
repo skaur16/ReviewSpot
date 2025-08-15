@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,9 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.itemInfo.comp.ItemInfoCard
 import com.example.reviewspot.features.myReviews.comp.ReviewCard
@@ -40,7 +44,7 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFCAF0F8)) // Lightest blue background
+            .background(colorResource(id = R.color.background_light_blue)) // Lightest blue background
             .padding(16.dp)
     ) {
         // Fixed item info at top
@@ -53,7 +57,7 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
             // Item image - rounded corners with size
             Image(
                 painter = painterResource(id = item.itemImage),
-                contentDescription = "Item Image",
+                contentDescription =  stringResource(id = R.string.item_image_desc),
                 modifier = Modifier
                     .size(140.dp)
                     .clip(RoundedCornerShape(12.dp)),
@@ -63,27 +67,27 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
             Text(
                 text = item.itemName,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color(0xFF03045E)
+                color = colorResource(id = R.color.deep_navy)
             )
             Text(
                 text = item.itemType.name,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF0077B6)
+                color = colorResource(id = R.color.medium_blue)
             )
         }
 
         // Separation line
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(vertical = 8.dp),
             thickness = 1.dp,
-            color = Color(0xFF90E0EF)
+            color = colorResource(id = R.color.divider_blue)
         )
 
         // Reviews header
         Text(
-            text = "Reviews",
+            text = stringResource(id = R.string.reviews),
             style = MaterialTheme.typography.headlineSmall,
-            color = Color(0xFF03045E),
+            color = colorResource(id = R.color.deep_navy),
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -97,9 +101,9 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
             if (viewModel.itemReviews.value.isEmpty()) {
                 item {
                     Text(
-                        text = "No Reviews Yet",
+                        text =stringResource(id = R.string.no_reviews_yet),
                         modifier = Modifier.padding(16.dp),
-                        color = Color(0xFF0096C7)
+                        color =  colorResource(id = R.color.accent_blue)
                     )
                 }
             } else {

@@ -25,8 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.features.myReviews.comp.formatDate
 import com.example.reviewspot.features.room.Review
@@ -49,7 +52,7 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFADE8F4) // Light pastel background for the card
+            containerColor = colorResource(id = R.color.soft_pastel_blue) // Light pastel background for the card
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp)
@@ -64,11 +67,11 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
                     .fillMaxWidth()
                     .border(
                         width = 2.dp,
-                        color = Color(0xFF00B4D8),
+                        color = colorResource(id = R.color.border_blue),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .background(
-                        color = Color.White,
+                        color = colorResource(id = R.color.white),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .padding(12.dp)
@@ -76,7 +79,7 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
                 Text(
                     text = review.reviewText,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF03045E)
+                    color = colorResource(id = R.color.deep_navy)
                 )
             }
 
@@ -84,9 +87,9 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
 
             // Numeric rating
             Text(
-                text = "Rating: ${review.rating}",
+                text = stringResource(id = R.string.rating, review.rating),
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color(0xFF0096C7)
+                color = colorResource(id = R.color.accent_blue)
             )
 
             //Star rating display
@@ -95,7 +98,7 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
                     Icon(
                         imageVector = if (i <= review.rating) Icons.Filled.Star else Icons.Outlined.Star,
                         contentDescription = "$i Star",
-                        tint = if (i <= review.rating) Color.Yellow else Color.Gray,
+                        tint = if (i <= review.rating) colorResource(id = R.color.yellow) else colorResource(id = R.color.gray),
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -105,9 +108,13 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
 
             // User name
             Text(
-                text = "By: ${user.value?.firstName.orEmpty()} ${user.value?.lastName.orEmpty()}",
+                text = stringResource(
+                    id = R.string.by_user,
+                    user.value?.firstName.orEmpty(),
+                    user.value?.lastName.orEmpty()
+                ),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF0077B6),
+                color =  colorResource(id = R.color.medium_blue),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -120,7 +127,7 @@ fun ItemInfoCard(review: Review, viewModel: ReviewViewModel) {
                 Text(
                     text = "${formatDate(review.timestamp)} - ${formatTime(review.timestamp)}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFF0077B6)
+                    color = colorResource(id = R.color.medium_blue)
                 )
             }
         }

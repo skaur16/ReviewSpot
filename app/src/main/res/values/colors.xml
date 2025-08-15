@@ -24,4 +24,9 @@
     <color name="light_blue">#CAF0F8</color>
     <color name="light_blue_card">#ADE8F4</color>
     <color name="text_dark">#03045E</color>
+    <color name="soft_pastel_blue">#ADE8F4</color>
+    <color name="dark_blue">#023E8A</color>
+    <color name="dark_navy">#03045E</color>
+    <color name="light_blue_divider">#90E0EF</color>
+    <color name="border_blue">#00B4D8</color>
 </resources>

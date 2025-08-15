@@ -44,4 +44,9 @@
     <string name="rating">Rating: %1$d</string>
     <string name="star_count">%1$d Star</string>
     <string name="by_user">By : %1$s %2$s</string>
+    <string name="home">Home</string>
+    <string name="header_image">Header Image</string>
+    <string name="logout">Log Out</string>
+    <string name="menu">Menu</string>
+        
 </resources>

@@ -56,7 +56,8 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    var selectedTitle by remember { mutableStateOf("Home") }
+    val homeTitle = stringResource(id = R.string.home)
+    var selectedTitle by remember { mutableStateOf(homeTitle) }
 
     val menuItems = listOf(
         Screens.Home.name,
@@ -70,12 +71,12 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(280.dp),
-                drawerContainerColor = Color(0xFFCAF0F8)
+                drawerContainerColor = colorResource(id = R.color.light_blue)
             ) {
                 // Header with image
                 Image(
                     painter = painterResource(id = R.drawable.review),
-                    contentDescription = "Header Image",
+                    contentDescription = stringResource(id = R.string.header_image),
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .fillMaxWidth()
@@ -90,19 +91,19 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                             Icon(
                                 imageVector = Icons.Default.FavoriteBorder,
                                 contentDescription = null,
-                                tint = Color(0xFF0077B6)
+                                tint = colorResource(id = R.color.medium_blue)
                             )
                         },
                         label = {
-                            Text(item, color = Color(0xFF03045E))
+                            Text(item, color = colorResource(id = R.color.dark_navy))
                         },
                         selected = selectedTitle == item,
                         colors = NavigationDrawerItemDefaults.colors(
                             unselectedContainerColor = Color.Transparent,
-                            selectedContainerColor = Color(0xFFADE8F4)
+                            selectedContainerColor = colorResource(id = R.color.soft_pastel_blue)
                         ),
                         onClick = {
-                            selectedTitle = item // 👈 change title
+                            selectedTitle = item
                             scope.launch { drawerState.close() }
                             navController.navigate(item)
                         },
@@ -111,7 +112,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         thickness = 1.dp,
-                        color = Color(0xFF90E0EF)
+                        color = colorResource(id = R.color.light_blue_divider)
                     )
                 }
 
@@ -120,7 +121,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                 // Display logged-in user
                 Text(
                     text = "${viewModel.loggedInUser.value?.firstName ?: ""} ${viewModel.loggedInUser.value?.lastName ?: ""}",
-                    color = Color(0xFF03045E),
+                    color = colorResource(id = R.color.dark_navy),
                     modifier = Modifier
                         .padding(start = 16.dp, bottom = 8.dp)
                 )
@@ -130,16 +131,16 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                         Icon(
                             imageVector = Icons.Default.FavoriteBorder,
                             contentDescription = null,
-                            tint = Color(0xFF0077B6)
+                            tint = colorResource(id = R.color.medium_blue)
                         )
                     },
                     label = {
-                        Text("Log Out", color = Color(0xFF03045E))
+                        Text(stringResource(id = R.string.logout), color = colorResource(id = R.color.dark_navy))
                     },
                     selected = false,
                     colors = NavigationDrawerItemDefaults.colors(
                         unselectedContainerColor = Color.Transparent,
-                        selectedContainerColor = Color(0xFFADE8F4)
+                        selectedContainerColor = colorResource(id = R.color.soft_pastel_blue)
                     ),
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -150,7 +151,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     thickness = 1.dp,
-                    color = Color(0xFF90E0EF)
+                    color = colorResource(id = R.color.light_blue_divider)
                 )
             }
         }
@@ -159,7 +160,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(selectedTitle, color = Color.White) // 👈 dynamic title here
+                        Text(selectedTitle, color = Color.White)
                     },
                     navigationIcon = {
                         IconButton(onClick = {
@@ -167,13 +168,13 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                         }) {
                             Icon(
                                 Icons.Default.Menu,
-                                contentDescription = "Menu",
+                                contentDescription = stringResource(id = R.string.menu),
                                 tint = Color.White
                             )
                         }
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = Color(0xFF023E8A)
+                        containerColor = colorResource(id = R.color.dark_blue)
                     )
                 )
             }
@@ -182,7 +183,7 @@ fun NavigationDrawer(viewModel: ReviewViewModel, mainNavController: NavControlle
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color(0xFF90E0EF))
+                    .background(colorResource(id = R.color.light_blue_divider))
             ) {
                 AppNavHost(navController, viewModel)
             }

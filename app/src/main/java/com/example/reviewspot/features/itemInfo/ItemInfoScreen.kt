@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.reviewspot.ReviewViewModel
+import com.example.reviewspot.features.itemInfo.comp.ItemInfoCard
 import com.example.reviewspot.features.myReviews.comp.ReviewCard
 import com.example.reviewspot.features.room.Item
 
@@ -103,7 +104,7 @@ fun ItemInfoScreen(viewModel: ReviewViewModel, item: Item, nav: NavController) {
                 }
             } else {
                 items(viewModel.itemReviews.value) { review ->
-                    ReviewCard(review = review, viewModel = viewModel)
+                    ItemInfoCard(review = review, viewModel = viewModel)
                 }
             }
         }

@@ -78,7 +78,8 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
         }
     }
 
-
+    //Star rating
+    val rating = mutableStateOf(0)
 
     //feature : userLogin
 
@@ -238,7 +239,7 @@ class ReviewViewModel(application : Application) : AndroidViewModel(application)
                 val review = Review(
                     reviewID = 0,
                     reviewText = reviewText.value,
-                    rating = ratingSelected.value,
+                    rating = rating.value,
                     itemID = itemFoundByNameAndType.value!!.itemID,
                     userID = loggedInUser.value!!.userID
                 )

@@ -18,4 +18,6 @@
     <string name="RateStar">Rate %1$d star</string>
     <string name="RateThisItem">Rate this item:</string>
     <string name="PleaseSelectRating">Please select a rating</string>
+    <string name="item_image">Item Image</string>
+    <string name="view_details">View Details</string>
 </resources>

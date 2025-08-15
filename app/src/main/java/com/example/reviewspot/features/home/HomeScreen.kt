@@ -24,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.reviewspot.R
 import com.example.reviewspot.ReviewViewModel
 import com.example.reviewspot.Screens
 import com.example.reviewspot.features.home.comp.ItemCard
@@ -40,7 +42,7 @@ fun HomeScreen(viewModel: ReviewViewModel, nav: NavController) {
     LazyColumn(
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.background(Color(0xFFCAF0F8))
+        modifier = Modifier.background(colorResource(id = R.color.lightest_blue))
     ) {
         items(viewModel.allItems.value) { item ->
             ItemCard(item, nav, viewModel)

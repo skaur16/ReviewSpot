@@ -15,4 +15,7 @@
     <string name="ReviewTextcannotbeempty">Review Text cannot be empty!</string>
     <string name="ReviewAddedsuccessfully">Review Added successfully!</string>
     <string name="Erroraddingreview">Error adding review!</string>
+    <string name="RateStar">Rate %1$d star</string>
+    <string name="RateThisItem">Rate this item:</string>
+    <string name="PleaseSelectRating">Please select a rating</string>
 </resources>

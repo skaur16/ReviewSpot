@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -59,7 +60,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFCAF0F8)) // Lightest blue background
+            .background(colorResource(id = R.color.lightest_blue)) // Lightest blue background
             .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -71,7 +72,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav: NavController) {
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
-                .border(3.dp, Color(0xFF0096C7), CircleShape) // Accent blue border
+                .border(3.dp, colorResource(id = R.color.accent_blue), CircleShape) // Accent blue border
                 .shadow(8.dp, CircleShape),
             contentScale = ContentScale.Crop
         )
@@ -103,7 +104,7 @@ fun AddItemScreen(viewModel: ReviewViewModel, nav: NavController) {
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF0077B6) // Medium blue button
+                containerColor = colorResource(id = R.color.medium_blue) // Medium blue button
             )
         ) {
             Text(

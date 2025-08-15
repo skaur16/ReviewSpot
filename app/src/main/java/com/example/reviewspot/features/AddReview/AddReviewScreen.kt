@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,8 +31,8 @@ fun StarRating(viewModel: ReviewViewModel) {
             val isSelected = i <= viewModel.rating.value
             Icon(
                 imageVector = if (isSelected) Icons.Filled.Star else Icons.Outlined.Star,
-                contentDescription = "Rate $i star",
-                tint = if (isSelected) Color.Yellow else Color.Gray,
+                contentDescription = stringResource(R.string.RateStar, i),
+                tint = if (isSelected) colorResource(R.color.yellow) else colorResource(R.color.gray),
                 modifier = Modifier
                     .size(40.dp)
                     .clickable { viewModel.rating.value = i }
@@ -53,14 +54,14 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFCAF0F8))
+            .background(colorResource(R.color.lightest_blue))
             .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.ChooseItem),
-            color = Color(0xFF03045E),
+            color = colorResource(R.color.deep_navy),
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -68,8 +69,7 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
 
         ItemName(viewModel, viewModel.itemsListByType.value)
 
-        // ⭐ Star rating instead of dropdown
-        Text(text = "Rate this item:", color = Color(0xFF03045E))
+        Text(text = stringResource(R.string.RateThisItem), color = colorResource(R.color.deep_navy))
         StarRating(viewModel)
 
         OutlinedTextField(
@@ -94,7 +94,7 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
                 } else if (viewModel.reviewText.value.isBlank()) {
                     Toast.makeText(context, reviewTextCannotBeEmpty, Toast.LENGTH_LONG).show()
                 } else if (viewModel.rating.value == 0) {
-                    Toast.makeText(context, "Please select a rating", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.PleaseSelectRating, Toast.LENGTH_LONG).show()
                 } else {
                     val onSuccess = {
                         Toast.makeText(context, reviewAddedSuccessfully, Toast.LENGTH_LONG).show()
@@ -110,11 +110,11 @@ fun AddReviewScreen(nav: NavController, viewModel: ReviewViewModel) {
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF0077B6)
+                containerColor = colorResource(R.color.medium_blue)
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = stringResource(id = R.string.AddReview), color = Color.White)
+            Text(text = stringResource(id = R.string.AddReview), color = colorResource(R.color.white))
         }
     }
 }
